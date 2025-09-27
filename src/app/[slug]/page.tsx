@@ -1,10 +1,24 @@
-import { getAllInvite, getInvite } from "../../helpers";
+import { getInvite } from "../../helpers";
 import { Metadata } from "next";
-import { TEMPLATE } from "../../constants";
+import { INTIVE_DIRECTORY, TEMPLATE } from "../../constants";
+import fs from "fs";
 
 type InviteProps = {
   slug: string;
 };
+
+
+export async function generateStaticParams() {
+  const fileList = fs.readdirSync(INTIVE_DIRECTORY);
+  const inviteList: InviteProps[] = [];
+  for (const fileName of fileList) {
+    const slug = fileName.replaceAll(".md", "");
+    inviteList.push({
+      slug,
+    });
+  }
+  return inviteList;
+}
 
 export async function generateMetadata({
   params,
@@ -12,8 +26,7 @@ export async function generateMetadata({
   params: Promise<InviteProps>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const allInvite = await getAllInvite();
-  const invite = allInvite.find(_invite => _invite.slug === slug);
+  const invite = await getInvite(slug);
 
   if (!invite) {
     return {

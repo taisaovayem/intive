@@ -19,14 +19,3 @@ export async function getInvite(slug: string): Promise<Invite> {
   matterResult.data.slut = slug;
   return matterResult.data as Invite;
 }
-
-export async function getAllInvite() {
-  const fileList = fs.readdirSync(INTIVE_DIRECTORY);
-  const allInvite: Invite[] = [];
-  for (const fileName of fileList) {
-    const slug = fileName.replaceAll(".md", "");
-    const post = await getInvite(slug);
-    allInvite.push(post);
-  }
-  return allInvite.sort((a, b) => a.to.localeCompare(b.to));
-}
