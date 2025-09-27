@@ -1,4 +1,4 @@
-import { getInvite } from "../../helpers";
+import { getAllInvite, getInvite } from "../../helpers";
 import { Metadata } from "next";
 import { TEMPLATE } from "../../constants";
 
@@ -12,7 +12,9 @@ export async function generateMetadata({
   params: Promise<InviteProps>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const invite = await getInvite(slug);
+  const allInvite = await getAllInvite();
+  const invite = allInvite.find(_invite => _invite.slug === slug);
+
   if (!invite) {
     return {
       title: "Thiệp mời không tồn tại",

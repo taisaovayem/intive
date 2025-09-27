@@ -7,4 +7,5 @@ export type Invite = {
   extractContent: string;
   time: string;
   place: string;
+  slug: string;
 };

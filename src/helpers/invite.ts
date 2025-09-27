@@ -16,6 +16,7 @@ export async function getInvite(slug: string): Promise<Invite> {
   const postPath = path.join(INTIVE_DIRECTORY, mdFileName);
   const postFileContent = fs.readFileSync(postPath, ENCODING);
   const matterResult = matter(postFileContent);
+  matterResult.data.slut = slug;
   return matterResult.data as Invite;
 }
 
