@@ -1,3 +1,4 @@
 export enum Template {
-    Basic = 'Basic'
+    Basic = 'Basic',
+    Avatar = 'Avatar',
 }
